@@ -1,0 +1,35 @@
+{% load cart_filters %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина</title>
+</head>
+<body>
+    <h1>Корзина</h1>
+    <div>
+        {% for product in products %}
+            <div>
+                <h2>{{ product.name }}</h2>
+                <p>Количество: {{ cart|get:product.id }}</p>
+                <p>Цена: {{ product.price }} ₽</p>
+                <p>Итого: {{ product.price|multiply:cart|get:product.id }} ₽</p>
+
+
+                <a href="{% url 'remove_from_cart' product.id %}">Удалить</a>
+            </div>
+        {% empty %}
+            <p>Ваша корзина пуста.</p>
+        {% endfor %}
+    </div>
+    
+    <form action="{% url 'clear_cart' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Очистить корзину</button>
+    </form>
+    
+    <a href="/">Продолжить покупки</a>
+</body>
+</html>

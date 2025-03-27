@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Магазин</title>
+</head>
+<body>
+    <h1>Наши товары</h1>
+    <div>
+        {% for product in products %}
+            <div>
+                <h2>{{ product.name }}</h2>
+                <p>{{ product.description }}</p>
+                <p>Цена: {{ product.price }} ₽</p>
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% endif %}
+                <a href="{% url 'add_to_cart' product.id %}">Добавить в корзину</a>
+            </div>
+        {% endfor %}
+    </div>
+    <a href="{% url 'view_cart' %}">Перейти в корзину</a>
+</body>
+</html>
